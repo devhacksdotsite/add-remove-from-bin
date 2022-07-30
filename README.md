@@ -1,3 +1,8 @@
+# Project Description
+React code challenge:
+    - Pull dummy data and display in Inventory bin
+    - Move items from 1 bin into the other removing the item in the process from bin
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
