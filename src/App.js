@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
 
-function App() {
+// data
+import { dummyData } from './js/placeholderData';
+
+// components
+import { Bin } from './components/Bin';
+
+export default function App() {
+  const [inventory, setInventory] = useState([]);
+  const [cart, setCart] = useState([]);
+
+
+  useEffect(() => {
+    setInventory(dummyData);
+  }, []);
+
+  const addTo = (list, setter, newItem) => {
+      setter([...list, newItem]);
+  }
+
+  const removeFrom = (list, setter, newItem) => {
+    const newData = list.filter((item) => item !== newItem );
+    setter([...newData]);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <div className="text-3xl">
+        <Bin 
+          title="Inventory"
+          listFrom={ inventory }
+          setListFrom={ setInventory }
+          listTo={ cart }
+          setListTo={ setCart }
+          add={ addTo }
+          remove={ removeFrom }
+        />
 
-export default App;
+        <hr className="border-2 border-slate-500"/>
+
+        <Bin 
+          title="Cart"
+          listFrom={ cart }
+          setListFrom={ setCart }
+          listTo={ inventory }
+          setListTo={ setInventory }
+          add={ addTo }
+          remove={ removeFrom }
+        />
+    </div>
+  )
+}

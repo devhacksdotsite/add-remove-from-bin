@@ -1,0 +1,56 @@
+import { useEffect, useState } from "react";
+
+const dummyData = ['item 1', 'item 2', 'item 3'];
+
+export default function App() {
+  const [inventory, setInventory] = useState([]);
+  const [cart, setCart] = useState([]);
+
+
+  useEffect(() => {
+    setInventory(dummyData);
+  }, []);
+
+  const addTo = (list, setter, newItem) => {
+      setter([...list, newItem]);
+  }
+
+  const removeFrom = (list, setter, newItem) => {
+    const newData = list.filter((item) => item !== newItem );
+    setter([...newData]);
+  }
+
+  return (
+    <div className="text-3xl">
+      <div>
+        <div className="inventory m-6 h-80">
+          <p className="font-semibold underline">Inventory:</p>
+          <ul className="mt-4">
+            { inventory && inventory.map((item, idx) => (
+              <li 
+                key={ idx }
+                onClick={ () => {
+                  addTo(cart, setCart, item);
+                  removeFrom(inventory, setInventory, item); 
+                } }>{ item }</li>
+            )) }
+          </ul>
+        </div>
+        <hr className="border-2 border-slate-500"/>
+        <div className="cart m-6">
+          <p className="font-semibold underline">Cart:</p>
+          <ul className="mt-4">
+            { cart && cart.map((item, idx) => (
+                <li 
+                  key={ idx }
+                  onClick={ () => {
+                    addTo(inventory, setInventory, item); 
+                    removeFrom(cart, setCart, item); 
+                  } }>{ item }</li>
+              )) }
+          </ul>
+        </div>
+      </div>
+    </div>
+  )
+}
